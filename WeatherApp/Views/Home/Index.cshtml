@@ -1,0 +1,57 @@
+﻿@model WeatherApp.Models.CityIndex;
+
+@{
+    ViewBag.Title = "Weather";
+    Layout = null;
+}
+
+@if (Model.City == null || Model.City == "")
+{
+    <div class="searchForm">
+        <h2>Search for a location</h2>
+
+        <div>
+            <form asp-action="Index" asp-controller="Home" method="post">
+                CityName, State:
+                <input type="text" name="City"> <br />
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+    </div>
+}
+@if (Model.TempC != null && Model.TempC != "")
+{
+    <h2 class="h2">Weather forecast for @Model.City</h2>
+    <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <div class="box">
+                    <p class="day">
+                        @Model.Day<br />
+                    </p>
+
+                    <img src="http://openweathermap.org/img/w/@(Model.SymbolId).png" alt="@(Model.Desc)" title="@(Model.Desc)">
+
+                    <p class=" temp">
+                        @Model.TempC C
+                    </p>
+                    <p class=" temp">
+                        @Model.TempF F
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("Search for a new Location", "Index")
+    </div>
+}
+else if(Model.City != null && Model.City != "")
+{
+    <h2 class="h2">Invalid city name: @Model.City</h2>
+    <div>
+        @Html.ActionLink("Search for a correct Location", "Index")
+    </div>
+}
